@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoryScreen from "./screens/CategoryScreen";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import MealSinglePage from "./screens/MealSinglePage";
 export default function App() {
   const Stack = createNativeStackNavigator();
   const [fontsLoaded] = useFonts({
@@ -20,7 +21,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="MealsCategories" screenOptions={{
           headerStyle: {backgroundColor: "#351401"}, 
@@ -32,6 +33,9 @@ export default function App() {
           }} />
           <Stack.Screen name="MealsListing" component={MealsListing} options={{
              title: "Meals Listing"
+          }} />
+          <Stack.Screen name="MealSinglePage" component={MealSinglePage} options={{
+            title: "Meal Single Page"
           }} />
         </Stack.Navigator>
       </NavigationContainer>

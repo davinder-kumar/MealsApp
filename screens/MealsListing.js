@@ -15,6 +15,13 @@ function MealsListing(props) {
    
   },[catId])
 
+  function onPressHandler(title, id){
+    props.navigation.navigate("MealSinglePage" ,{
+      mealId : id, 
+      mealTitle: title
+    })
+  }
+
   function renderMealItem(item) {
     const itemData = item.item;
     const propsData = {
@@ -23,6 +30,7 @@ function MealsListing(props) {
       duration: itemData.duration,
       complexity: itemData.complexity,
       affordability: itemData.affordability,
+      onPressHandler: onPressHandler.bind(this,itemData.title,itemData.id)
     };
     return <MealItem {...propsData} />;
   }
