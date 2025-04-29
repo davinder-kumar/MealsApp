@@ -4,6 +4,7 @@ import { MEALS } from "../data/dummyData";
 import Subtitle from "../components/MealSingleItem/Subtitle";
 import List from "../components/MealSingleItem/List";
 import { useEffect } from "react";
+import ButtonIcon from "../components/ButtonIcon";
 
 function MealSinglePage({ route, navigation }) {
   const params = route.params;
@@ -16,7 +17,7 @@ function MealSinglePage({ route, navigation }) {
   useEffect(()=>{
     navigation.setOptions({
       headerRight: () => {
-        return <Button title="Press me" onPress={PressMe} />
+        return <ButtonIcon onPress={PressMe} icon={"star"} color={"white"}/>
       }
     })
   },[])
