@@ -1,7 +1,6 @@
-import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { CATEGORIES, MEALS } from "../data/dummyData";
-import MealItem from "../components/MealItem";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
+import MealList from "../components/MealList/MealList";
 
 function MealsListing(props) {
   const catId = props.route.params.categoryId;
@@ -14,42 +13,11 @@ function MealsListing(props) {
     props.navigation.setOptions({title: title})
    
   },[catId])
+  
 
-  function onPressHandler(title, id){
-    props.navigation.navigate("MealSinglePage" ,{
-      mealId : id, 
-      mealTitle: title
-    })
-  }
-
-  function renderMealItem(item) {
-    const itemData = item.item;
-    const propsData = {
-      title: itemData.title,
-      imageURL: itemData.imageUrl,
-      duration: itemData.duration,
-      complexity: itemData.complexity,
-      affordability: itemData.affordability,
-      onPressHandler: onPressHandler.bind(this,itemData.title,itemData.id)
-    };
-    return <MealItem {...propsData} />;
-  }
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={filteredItems}
-        key={(item) => item.id}
-        renderItem={renderMealItem}
-      />
-    </View>
-  );
+  return <MealList items={filteredItems}/>;
 }
 
 export default MealsListing;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-})
+

@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
-import MealDetails from "./MealDetails";
+import MealDetails from "../MealDetails";
 
 function MealItem({ title, imageURL, duration, complexity, affordability, onPressHandler }) {
   return (

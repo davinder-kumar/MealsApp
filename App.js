@@ -3,15 +3,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
 import MealsListing from "./screens/MealsListing";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoryScreen from "./screens/CategoryScreen";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import MealSinglePage from "./screens/MealSinglePage";
 import { Ionicons } from "@expo/vector-icons";
 import FavoriteContextProvider from "./store/context/context-favs";
+import FavoritesScreen from "./screens/FavoritesScreen";
 export default function App() {
-  const Stack = createStackNavigator();
+  const Stack = createNativeStackNavigator();
   const Drawer = createDrawerNavigator();
   function createDrawerNavigation() {
     return (
@@ -40,7 +41,7 @@ export default function App() {
         />
         <Drawer.Screen
           name="Fav"
-          component={CategoryScreen}
+          component={FavoritesScreen}
           options={{
             drawerIcon: (props) => (
               <Ionicons name="star" size={props.size} color={props.color} />

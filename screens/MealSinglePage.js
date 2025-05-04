@@ -1,11 +1,11 @@
 import { Alert, Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummyData";
-import Subtitle from "../components/MealSingleItem/Subtitle";
 import List from "../components/MealSingleItem/List";
 import { useContext, useEffect } from "react";
 import ButtonIcon from "../components/ButtonIcon";
 import { FavoriteContext } from "../store/context/context-favs";
+import Subtitle from '../components/MealSingleItem/Subtitle'
 
 function MealSinglePage({ route, navigation }) {
   const params = route.params;
