@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import MealsListing from "./screens/MealsListing";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,6 +8,8 @@ import CategoryScreen from "./screens/CategoryScreen";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import MealSinglePage from "./screens/MealSinglePage";
+import { Ionicons } from "@expo/vector-icons";
+import FavoriteContextProvider from "./store/context/context-favs";
 export default function App() {
   const Stack = createStackNavigator();
   const Drawer = createDrawerNavigator();
@@ -20,20 +22,31 @@ export default function App() {
           sceneStyle: { backgroundColor: "#3f2f25" },
           drawerActiveTintColor: "#3f2f25",
           drawerInactiveTintColor: "white",
-          drawerActiveBackgroundColor:  "#8a7567",
+          drawerActiveBackgroundColor: "#8a7567",
           drawerStyle: {
             backgroundColor: "#3f2f25",
           },
-        }}     
+        }}
       >
         <Drawer.Screen
           name="DrawerScreen"
           component={CategoryScreen}
           options={{
             title: "Categories",
+            drawerIcon: (props) => (
+              <Ionicons name="list" size={props.size} color={props.color} />
+            ),
           }}
         />
-        <Drawer.Screen name="Fav" component={CategoryScreen} />
+        <Drawer.Screen
+          name="Fav"
+          component={CategoryScreen}
+          options={{
+            drawerIcon: (props) => (
+              <Ionicons name="star" size={props.size} color={props.color} />
+            ),
+          }}
+        />
       </Drawer.Navigator>
     );
   }
@@ -50,39 +63,43 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
+      <FavoriteContextProvider>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="MealsCategories"
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <Stack.Screen
-            name="MealsCategories"
-            component={createDrawerNavigation}
-            options={{
-              title: "All Categories",
-              headerShown: false,
+        
+          <Stack.Navigator
+            initialRouteName="MealsCategories"
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen
-            name="MealsListing"
-            component={MealsListing}
-            options={{
-              title: "Meals Listing",
-            }}
-          />
-          <Stack.Screen
-            name="MealSinglePage"
-            component={MealSinglePage}
-            options={{
-              title: "Meal Single Page",
-            }}
-          />
-        </Stack.Navigator>
+          >
+            <Stack.Screen
+              name="MealsCategories"
+              component={createDrawerNavigation}
+              options={{
+                title: "All Categories",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsListing"
+              component={MealsListing}
+              options={{
+                title: "Meals Listing",
+              }}
+            />
+            <Stack.Screen
+              name="MealSinglePage"
+              component={MealSinglePage}
+              options={{
+                title: "Meal Single Page",
+              }}
+            />
+          </Stack.Navigator>
+       
       </NavigationContainer>
+      </FavoriteContextProvider>
     </>
   );
 }

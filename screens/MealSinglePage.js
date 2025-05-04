@@ -3,24 +3,31 @@ import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummyData";
 import Subtitle from "../components/MealSingleItem/Subtitle";
 import List from "../components/MealSingleItem/List";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ButtonIcon from "../components/ButtonIcon";
+import { FavoriteContext } from "../store/context/context-favs";
 
 function MealSinglePage({ route, navigation }) {
   const params = route.params;
   const mealId = params.mealId;
   const Meal = MEALS.find((meal) => meal.id === mealId);
-
-  function PressMe(){
-    console.log("Being Pressed")
+  const favDataContext = useContext(FavoriteContext)
+  const isFavMeal = favDataContext.ids.includes(mealId)
+  
+  function favHandler(){
+    if(isFavMeal){
+      favDataContext.removeFav(mealId)
+      return;
+    }
+    favDataContext.addFav(mealId)
   }
   useEffect(()=>{
     navigation.setOptions({
       headerRight: () => {
-        return <ButtonIcon onPress={PressMe} icon={"star"} color={"white"}/>
+        return <ButtonIcon onPress={favHandler} icon={isFavMeal ? "star" : "star-outline"} color={"white"}/>
       }
     })
-  },[])
+  },[isFavMeal,favHandler])
 
   return (
     <ScrollView style={styles.rootContainer}>
