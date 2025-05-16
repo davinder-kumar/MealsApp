@@ -1,25 +1,28 @@
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummyData";
 import List from "../components/MealSingleItem/List";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import ButtonIcon from "../components/ButtonIcon";
-import { FavoriteContext } from "../store/context/context-favs";
 import Subtitle from '../components/MealSingleItem/Subtitle'
+import { useDispatch, useSelector } from "react-redux";
+import { removeFavorite, addFavorite } from "../store/redux/favorites";
 
 function MealSinglePage({ route, navigation }) {
+  const dispatch = useDispatch();
   const params = route.params;
   const mealId = params.mealId;
   const Meal = MEALS.find((meal) => meal.id === mealId);
-  const favDataContext = useContext(FavoriteContext)
-  const isFavMeal = favDataContext.ids.includes(mealId)
+  // const favDataContext = useContext(FavoriteContext)
+  const favoritesData = useSelector((state) => state.favorites )
+  const isFavMeal = favoritesData.ids.includes(mealId)
   
   function favHandler(){
     if(isFavMeal){
-      favDataContext.removeFav(mealId)
+      dispatch(removeFavorite(mealId))
       return;
     }
-    favDataContext.addFav(mealId)
+    dispatch(addFavorite(mealId))
   }
   useEffect(()=>{
     navigation.setOptions({

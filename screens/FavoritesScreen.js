@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { FavoriteContext } from '../store/context/context-favs';
+import React from 'react';
 import MealList from '../components/MealList/MealList';
 import { MEALS } from '../data/dummyData';
+import { useSelector } from 'react-redux';
 
 const FavoritesScreen = () => {
-    const favContextData = useContext(FavoriteContext)
-    const data = MEALS.filter(meal => favContextData.ids.includes(meal.id))
+    const favoritesData = useSelector(state => state.favorites)
+    const data = MEALS.filter(meal => favoritesData.ids.includes(meal.id))
     return <MealList items={data} />
 };
 
